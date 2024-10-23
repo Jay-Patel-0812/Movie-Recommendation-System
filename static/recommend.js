@@ -12,7 +12,7 @@ $(function() {
   source.addEventListener('input', inputHandler);
 
   $('.movie-button').on('click',function(){
-    var my_api_key = 'YOUR_API_KEY';
+    var my_api_key = 'd438bca350821b39168f3c120efc87b0';
     var title = $('.movie').val();
     if (title=="") {
       $('.results').css('display','none');
@@ -26,17 +26,20 @@ $(function() {
 
 // will be invoked when clicking on the recommended movies
 function recommendcard(e){
-  var my_api_key = 'YOUR_API_KEY';
+  var my_api_key = 'd438bca350821b39168f3c120efc87b0';
   var title = e.getAttribute('title'); 
   load_details(my_api_key,title);
 }
 
 // get the basic details of the movie from the API (based on the name of the movie)
+// Function to load movie details based on the title provided
 function load_details(my_api_key,title){
+  // Making an AJAX GET request to the movie database API
   $.ajax({
     type: 'GET',
     url:'https://api.themoviedb.org/3/search/movie?api_key='+my_api_key+'&query='+title,
 
+    // Success callback function
     success: function(movie){
       if(movie.results.length<1){
         $('.fail').css('display','block');
@@ -49,9 +52,11 @@ function load_details(my_api_key,title){
         $('.results').delay(1000).css('display','block');
         var movie_id = movie.results[0].id;
         var movie_title = movie.results[0].original_title;
+        // Call the function to get movie recommendations
         movie_recs(movie_title,movie_id,my_api_key);
       }
     },
+    // Error callback function
     error: function(){
       alert('Invalid Request');
       $("#loader").delay(500).fadeOut();

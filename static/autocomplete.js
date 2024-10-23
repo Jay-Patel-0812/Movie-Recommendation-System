@@ -3,7 +3,7 @@ new autoComplete({
       src: films,
     },
     selector: "#autoComplete",           // Input field selector              | (Optional)
-    threshold: 2,                        // Min. Chars length to start Engine | (Optional)
+    threshold: 0,                        // Min. Chars length to start Engine | (Optional)
     debounce: 100,                       // Post duration for engine to start | (Optional)
     searchEngine: "strict",              // Search Engine type/mode           | (Optional)
     resultsList: {                       // Rendered results list object      | (Optional)
@@ -28,7 +28,11 @@ new autoComplete({
         result.setAttribute("class", "no_result");
         result.setAttribute("tabindex", "1");
         result.innerHTML = "No Results";
-        document.querySelector("#autoComplete_list").appendChild(result);
+        // document.querySelector("#autoComplete_list").appendChild(result);
+        const list = document.querySelector("#autoComplete_list");
+        if (list) {                         // Check if the element exists
+            list.appendChild(result);
+        }
     },
     onSelection: feedback => {             // Action script onSelection event | (Optional)
         document.getElementById('autoComplete').value = feedback.selection.value;
